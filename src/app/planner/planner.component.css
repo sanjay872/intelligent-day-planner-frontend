@@ -1,0 +1,9 @@
+form{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+.field{
+    width: 100%;
+    margin: 1em;
+}
