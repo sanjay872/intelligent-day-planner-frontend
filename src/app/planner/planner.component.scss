@@ -1,28 +1,4 @@
-form{
+.main{
     display: flex;
-    flex-direction: column;
-    width: 60%;
-}
-.field{
-    width: 100%;
-    margin: 1em;
-}
-.date{
-    display: flex;
-    gap: 2em;
-    margin: 1em;
-}
-.notifyDate{
-    display: flex;
-    align-items: end;
-    gap: 1em;
-}
-.notifyDate-fields{
-    display: flex;
-    gap: 1em;
-}
-.toggle{
-    display: flex;
-    align-items: center;
-    gap: 1em;
+    gap: 5em;
 }

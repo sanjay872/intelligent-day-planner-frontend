@@ -1,0 +1,84 @@
+<div class="main">
+    <form class="form" #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <mat-form-field class="field">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" name="name" ngModel>
+        </mat-form-field>
+      <mat-form-field class="field">
+          <mat-label>Location</mat-label>
+          <input matInput type="text" name="location" ngModel>
+      </mat-form-field>
+      <mat-form-field class="field">
+          <mat-label>Task Description</mat-label>
+          <textarea matInput type="" name="task" ngModel></textarea>
+      </mat-form-field>
+      <div class="date">
+          <mat-form-field>
+              <mat-label>Planned Date</mat-label>
+              <input matInput 
+              [matDatepicker]="datepicker"
+              ngModel
+              name="plannedDate"
+              >
+              <mat-datepicker #datepicker/>
+              <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+            </mat-form-field>
+            
+            <mat-form-field>
+              <mat-label>Planned Start Time</mat-label>
+              <input matInput
+                [matTimepicker]="timeStartpicker"
+                ngModel
+                name="plannedStartTime"
+                >
+              <mat-timepicker #timeStartpicker/>
+              <mat-timepicker-toggle [for]="timeStartpicker" matSuffix/>
+            </mat-form-field>         
+            <mat-form-field>
+              <mat-label>Planned End Time</mat-label>
+              <input matInput
+                [matTimepicker]="timeEndpicker"
+                ngModel
+                name="plannedEndTime"
+                >
+              <mat-timepicker #timeEndpicker/>
+              <mat-timepicker-toggle [for]="timeEndpicker" matSuffix/>
+            </mat-form-field>  
+      </div>   
+      <div class="toggle">
+        <div class="notifyDate">
+          <p><mat-slide-toggle [(ngModel)]="notify" ngModel class="field" name="notify">Notify Me</mat-slide-toggle></p>
+        @if (notify) {
+            <div class="notifyDate-fields">
+                <mat-form-field>
+                    <mat-label>Notify Date</mat-label>
+                    <input matInput 
+                    [matDatepicker]="datepicker"
+                    ngModel
+                    name="NotifyDate"
+                    >
+                    <mat-datepicker #datepicker/>
+                    <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+                  </mat-form-field>
+                  
+                  <mat-form-field>
+                    <mat-label>Notify Time</mat-label>
+                    <input matInput
+                      [matTimepicker]="timepicker"
+                      ngModel
+                      name="NotifyTime"
+                      >
+                    <mat-timepicker #timepicker/>
+                    <mat-timepicker-toggle [for]="timepicker" matSuffix/>
+                  </mat-form-field>         
+            </div>
+        }
+        </div>
+        <mat-slide-toggle class="field" name="isComplete" ngModel>Is Completed</mat-slide-toggle>
+      </div>
+      <button mat-raised-button type="submit">Add</button>
+    </form>
+    <div class="plans">
+      
+    </div>
+  </div>

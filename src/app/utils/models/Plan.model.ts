@@ -1,5 +1,5 @@
 export interface Plan{
-    id:string,
+    id?:string|undefined,
     userId:string,
     name:string,
     location:string,

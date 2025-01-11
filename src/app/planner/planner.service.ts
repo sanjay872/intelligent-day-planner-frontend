@@ -17,4 +17,8 @@ export class PlannerService {
    return this.http.get<Plan[]>('http://localhost:8080/plan'+id);
   }
 
+  addPlan(plan:Plan){
+    return this.http.post('http://localhost:8080/plan',plan);
+  }
+
 }
