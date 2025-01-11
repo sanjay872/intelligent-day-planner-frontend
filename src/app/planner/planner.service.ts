@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import {Plan} from '../utils/models/Plan.model';
 import { Injectable } from "@angular/core";
+import { TaskType } from "../utils/models/TaskType.model";
 
 @Injectable({
   providedIn: 'root'
@@ -21,4 +22,7 @@ export class PlannerService {
     return this.http.post('http://localhost:8080/plan',plan);
   }
 
+  getTaskTypes(){
+    return this.http.get<TaskType[]>('http://localhost:8080/task');
+  }
 }

@@ -2,48 +2,64 @@
     <form class="form" #form="ngForm" (ngSubmit)="onSubmit(form)">
       <mat-form-field class="field">
           <mat-label>Name</mat-label>
-          <input matInput type="text" name="name" ngModel>
+          <input matInput type="text" name="name" ngModel required>
         </mat-form-field>
       <mat-form-field class="field">
           <mat-label>Location</mat-label>
-          <input matInput type="text" name="location" ngModel>
+          <input matInput type="text" name="location" ngModel required>
       </mat-form-field>
       <mat-form-field class="field">
           <mat-label>Task Description</mat-label>
-          <textarea matInput type="" name="task" ngModel></textarea>
+          <textarea matInput type="" name="task" ngModel required></textarea>
       </mat-form-field>
-      <div class="date">
-          <mat-form-field>
-              <mat-label>Planned Date</mat-label>
-              <input matInput 
-              [matDatepicker]="datepicker"
-              ngModel
-              name="plannedDate"
-              >
-              <mat-datepicker #datepicker/>
-              <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+      @if (taskTypes.length>0) {
+        <mat-form-field class="field">
+          <mat-label>Task Types</mat-label>
+          <select matNativeControl required>
+            @for(taskType of taskTypes; track taskType.id){
+              <option [value]="taskType.id">{{taskType.taskName}}</option>
+            }
+          </select>
+        </mat-form-field>
+      }
+      <div class="planned-date">
+        <p class="planned-date-title">Planned Date</p>
+        <div class="planned-date-body">
+          <div class="planned-date--start">
+            <mat-form-field>
+              <mat-label>Start Date</mat-label>
+              <input matInput [matDatepicker]="planstartdatepicker" ngModel name="plannedStartDate" required>
+              <mat-datepicker #planstartdatepicker/>
+              <mat-datepicker-toggle [for]="planstartdatepicker" matSuffix/>
             </mat-form-field>
-            
             <mat-form-field>
-              <mat-label>Planned Start Time</mat-label>
+              <mat-label>Start time</mat-label>
               <input matInput
-                [matTimepicker]="timeStartpicker"
-                ngModel
-                name="plannedStartTime"
-                >
-              <mat-timepicker #timeStartpicker/>
-              <mat-timepicker-toggle [for]="timeStartpicker" matSuffix/>
-            </mat-form-field>         
+                [matTimepicker]="planstarttimepicker"
+                ngModel name="plannedStartDate"
+                [ngModelOptions]="{updateOn: 'blur'}" required>
+              <mat-timepicker #planstarttimepicker/>
+              <mat-timepicker-toggle [for]="planstarttimepicker" matSuffix/>
+            </mat-form-field>
+          </div>
+          <div class="planned-date--end">
             <mat-form-field>
-              <mat-label>Planned End Time</mat-label>
+              <mat-label>End date</mat-label>
+              <input matInput [matDatepicker]="planenddatepicker" ngModel name="plannedEndDate" required>
+              <mat-datepicker #planenddatepicker/>
+              <mat-datepicker-toggle [for]="planenddatepicker" matSuffix/>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>End time</mat-label>
               <input matInput
-                [matTimepicker]="timeEndpicker"
-                ngModel
-                name="plannedEndTime"
-                >
-              <mat-timepicker #timeEndpicker/>
-              <mat-timepicker-toggle [for]="timeEndpicker" matSuffix/>
-            </mat-form-field>  
+                [matTimepicker]="planendtimepicker"
+                ngModel name="plannedEndDate"
+                [ngModelOptions]="{updateOn: 'blur'}" required>
+              <mat-timepicker #planendtimepicker/>
+              <mat-timepicker-toggle [for]="planendtimepicker" matSuffix/>
+            </mat-form-field>
+          </div>
+        </div>
       </div>   
       <div class="toggle">
         <div class="notifyDate">

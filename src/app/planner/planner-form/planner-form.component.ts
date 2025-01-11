@@ -9,6 +9,7 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatTimepickerModule} from '@angular/material/timepicker';
 import {MatButtonModule} from '@angular/material/button';
 import { Plan } from '../../utils/models/Plan.model';
+import { TaskType } from '../../utils/models/TaskType.model';
 
 @Component({
   selector: 'app-planner-form',
@@ -29,34 +30,44 @@ import { Plan } from '../../utils/models/Plan.model';
 export class PlannerFormComponent implements OnInit {
   notify:boolean=false;
   isCompleted:boolean=false;
+  taskTypes:TaskType[]=[];
 
   constructor(private plannerService:PlannerService) { }
 
   ngOnInit(): void {
-    
+    this.plannerService.getTaskTypes().subscribe((res)=>{
+      this.taskTypes=res;
+      console.log(this.taskTypes)
+    })
   }
 
   onSubmit(form:NgForm){
     const formControl=form.control;
-    const plannedDate=formControl.get('plannedDate')?.value;
-    const plannedTime=formControl.get('plannedTime')?.value;
-    console.log(plannedDate)
-    console.log(plannedTime)
+    const plannedStartDate:Date=formControl.get('plannedStartDate')?.value;
+    const plannedEndDate:Date=formControl.get('plannedEndDate')?.value;
+    var notifyDate:Date=formControl.get('notifyDate')?.value;
+    if(!this.notify){
+      notifyDate=new Date(plannedStartDate);
+      notifyDate.setMinutes(notifyDate.getMinutes()-10);
+    }
     const plan:Plan={
-      id:'',
       name:formControl.get('name')?.value,
-      userId:String(Math.random()*10),
+      userId:"1000",
+      taskName:'COOKING',
       location:formControl.get('location')?.value,
       task:formControl.get('task')?.value,
       createdDate:new Date(),
       updatedDate:new Date(),
-      plannedDate:new Date(),
-      notify:false,
-      notifyDate:new Date(),
+      plannedStartDate:plannedStartDate,
+      plannedEndDate:plannedEndDate,
+      notify:this.notify,
+      notifyDate:notifyDate,
       isCompleted:false,
     }
     console.log(plan)
-    // this.plannerService.addPlan(plan);
+    this.plannerService.addPlan(plan).subscribe((res)=>{
+      console.log(res);
+    });
   }
 
   enableNotify(event:any){

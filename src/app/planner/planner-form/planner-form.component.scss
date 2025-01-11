@@ -15,10 +15,35 @@
 .field{
     margin: 1em;
 }
-.date{
+.planned-date{
     display: flex;
+    flex-direction: column; 
     gap: 2em;
     margin: 1em;
+    flex-wrap: wrap;
+    padding: 1em;
+    border: .1em solid black;
+    border-radius: 1em;
+    box-shadow: .4em 1em 1.5em rgb(189, 183, 183);
+    &-title{
+        font-weight: bolder;
+        font-size: larger;
+        margin: 0;
+        padding: 0;
+        // border-bottom: .01em solid black;
+    }
+    &-body{
+        display: flex;  
+        gap: 1em; 
+    }
+    &--start{
+     display: flex;
+     gap: 1em;
+    }
+    &--end{
+        display: flex;
+        gap:1em;
+    }
 }
 .notifyDate{
     display: flex;
