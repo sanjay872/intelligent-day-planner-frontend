@@ -8,6 +8,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatTimepickerModule} from '@angular/material/timepicker';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-planner',
@@ -16,12 +17,13 @@ import {MatTimepickerModule} from '@angular/material/timepicker';
     MatFormFieldModule, 
     MatSlideToggleModule,
   MatDatepickerModule,
-  MatTimepickerModule],
+  MatTimepickerModule,
+  MatButtonModule],
   providers:[
     provideNativeDateAdapter()
   ],
   templateUrl: './planner.component.html',
-  styleUrl: './planner.component.css',
+  styleUrl: './planner.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlannerComponent implements OnInit {
