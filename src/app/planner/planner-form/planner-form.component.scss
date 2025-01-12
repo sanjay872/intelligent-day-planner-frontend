@@ -47,11 +47,12 @@
 }
 .notifyDate{
     display: flex;
-    align-items: end;
+    align-items: center;
     gap: 1em;
     &-fields{
         display: flex;
         gap: 1em;
+        align-items: baseline;
     }
 }
 

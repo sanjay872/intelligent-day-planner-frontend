@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, signal } from '@angular/core';
 import { PlannerService } from '../planner.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -8,6 +8,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatTimepickerModule} from '@angular/material/timepicker';
 import {MatButtonModule} from '@angular/material/button';
+import {MatChipsModule} from '@angular/material/chips';
 import { Plan } from '../../utils/models/Plan.model';
 import { TaskType } from '../../utils/models/TaskType.model';
 
@@ -20,7 +21,8 @@ import { TaskType } from '../../utils/models/TaskType.model';
     MatSlideToggleModule,
     MatDatepickerModule,
     MatTimepickerModule,
-    MatButtonModule],
+    MatButtonModule,
+    MatChipsModule],
   providers:[
     provideNativeDateAdapter()
   ],
@@ -28,16 +30,19 @@ import { TaskType } from '../../utils/models/TaskType.model';
   styleUrl: './planner-form.component.scss'
 })
 export class PlannerFormComponent implements OnInit {
-  notify:boolean=false;
-  isCompleted:boolean=false;
-  taskTypes:TaskType[]=[];
+  notify=signal<boolean>(false);
+  showNotifyCustom=signal(false);
+  isCompleted=signal(false);
+  taskTypes=signal<TaskType[]>([]);
+  quickTime=signal<10|15|30|0>(0);
+  isLoaded=signal<boolean>(false);
 
   constructor(private plannerService:PlannerService) { }
 
   ngOnInit(): void {
     this.plannerService.getTaskTypes().subscribe((res)=>{
-      this.taskTypes=res;
-      console.log(this.taskTypes)
+      this.taskTypes.set(res);
+      this.isLoaded.set(false);
     })
   }
 
@@ -45,22 +50,30 @@ export class PlannerFormComponent implements OnInit {
     const formControl=form.control;
     const plannedStartDate:Date=formControl.get('plannedStartDate')?.value;
     const plannedEndDate:Date=formControl.get('plannedEndDate')?.value;
-    var notifyDate:Date=formControl.get('notifyDate')?.value;
+    var notifyDate:Date;
     if(!this.notify){
       notifyDate=new Date(plannedStartDate);
-      notifyDate.setMinutes(notifyDate.getMinutes()-10);
+    }
+    else{
+      if(this.quickTime()!=0){
+        notifyDate=new Date(plannedStartDate);
+        notifyDate.setMinutes(notifyDate.getMinutes()-this.quickTime());
+      }
+      else{
+        notifyDate=formControl.get('notifyDate')?.value
+      }
     }
     const plan:Plan={
       name:formControl.get('name')?.value,
       userId:"1000",
-      taskName:'COOKING',
+      taskName:formControl.get('taskType')?.value,
       location:formControl.get('location')?.value,
       task:formControl.get('task')?.value,
       createdDate:new Date(),
       updatedDate:new Date(),
       plannedStartDate:plannedStartDate,
       plannedEndDate:plannedEndDate,
-      notify:this.notify,
+      notify:this.notify(),
       notifyDate:notifyDate,
       isCompleted:false,
     }
@@ -72,5 +85,18 @@ export class PlannerFormComponent implements OnInit {
 
   enableNotify(event:any){
     console.log(event);
+  }
+
+  showCustom(){
+    this.showNotifyCustom.set(true);
+    this.quickTime.set(0);
+  }
+
+  hideCustom(){
+    this.showNotifyCustom.set(false);
+  }
+
+  setQuickTime(min:0|10|15|30){
+    this.quickTime.set(min);
   }
 }
