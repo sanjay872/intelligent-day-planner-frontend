@@ -40,10 +40,10 @@ export class PlannerFormComponent implements OnInit {
   constructor(private plannerService:PlannerService) { }
 
   ngOnInit(): void {
-    this.plannerService.getTaskTypes().subscribe((res)=>{
-      this.taskTypes.set(res);
-      this.isLoaded.set(false);
-    })
+    // this.plannerService.getTaskTypes().subscribe((res)=>{
+    //   this.taskTypes.set(res);
+    //   this.isLoaded.set(false);
+    // })
   }
 
   onSubmit(form:NgForm){

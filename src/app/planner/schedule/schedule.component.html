@@ -1,1 +1,34 @@
-<p>schedule works!</p>
+<!-- <div class="schedule">
+    <div>Plan</div>
+    <div class="grid">
+        @for (time of timeLength; track $index) {
+            <div class="cell">
+                <div> {{time}} AM</div>
+                <div>Data</div>
+            </div>
+        }
+        @for (time of timeLength; track $index) {
+            <div class="cell">
+                <div> {{time}} PM</div>
+                <div>Data</div>
+            </div>
+        }
+    </div>
+</div> -->
+
+<div class="main">
+    <table>
+        @for (time of timeAM; track $index) {
+            <tr>
+                <td class="time">{{time}} AM</td>
+                <td class="data"></td>
+            </tr>
+        }
+        @for (time of timePM; track $index) {
+            <tr>
+                <td class="time">{{time}} PM</td>
+                <td class="data"></td>
+            </tr>
+        }
+    </table>
+</div>

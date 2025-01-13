@@ -1,0 +1,26 @@
+table{
+    display: block;
+    overflow: auto;
+    width:90vw;
+    height: 95vh;
+}
+tr{
+    height: 10em;
+}
+.time{
+    width: 10em;
+}
+.data{
+    width: 90%;
+}
+.time,.data{
+    border: .1em solid black;
+    border-left: 0em;
+    border-top: 0em;
+    text-align: center;
+}
+.main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
