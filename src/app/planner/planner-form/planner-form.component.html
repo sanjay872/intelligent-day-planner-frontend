@@ -15,9 +15,9 @@
     @if (taskTypes().length>0) {
       <mat-form-field class="field">
         <mat-label>Task Types</mat-label>
-        <select matNativeControl required ngModel name="taskType">
+        <select matNativeControl required ngModel name="taskName">
           @for(taskType of taskTypes(); track taskType.id){
-            <option [value]="taskType.taskName">{{taskType.taskName}}</option>
+            <option value="{{taskType.id}}">{{taskType.taskName}}</option>
           }
         </select>
       </mat-form-field>
@@ -38,7 +38,7 @@
               [matTimepicker]="planstarttimepicker"
               ngModel name="plannedStartDate"
               [ngModelOptions]="{updateOn: 'blur'}" required>
-            <mat-timepicker #planstarttimepicker/>
+            <mat-timepicker interval="15m" #planstarttimepicker/>
             <mat-timepicker-toggle [for]="planstarttimepicker" matSuffix/>
           </mat-form-field>
         </div>
@@ -55,7 +55,7 @@
               [matTimepicker]="planendtimepicker"
               ngModel name="plannedEndDate"
               [ngModelOptions]="{updateOn: 'blur'}" required>
-            <mat-timepicker #planendtimepicker/>
+            <mat-timepicker interval="15m" #planendtimepicker/>
             <mat-timepicker-toggle [for]="planendtimepicker" matSuffix/>
           </mat-form-field>
         </div>

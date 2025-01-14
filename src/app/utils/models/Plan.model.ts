@@ -1,9 +1,11 @@
+import { TaskType } from "./TaskType.model";
+
 export interface Plan{
     id?:string|undefined,
     userId:string,
     name:string,
     location:string,
-    taskName:string,
+    taskName:TaskType,
     createdDate:Date,
     updatedDate:Date,
     plannedStartDate:Date,

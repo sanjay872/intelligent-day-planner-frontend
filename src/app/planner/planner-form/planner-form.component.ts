@@ -11,6 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatChipsModule} from '@angular/material/chips';
 import { Plan } from '../../utils/models/Plan.model';
 import { TaskType } from '../../utils/models/TaskType.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-planner-form',
@@ -37,21 +38,23 @@ export class PlannerFormComponent implements OnInit {
   quickTime=signal<10|15|30|0>(0);
   isLoaded=signal<boolean>(false);
 
-  constructor(private plannerService:PlannerService) { }
+  constructor(private plannerService:PlannerService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    // this.plannerService.getTaskTypes().subscribe((res)=>{
-    //   this.taskTypes.set(res);
-    //   this.isLoaded.set(false);
-    // })
+    this.plannerService.getTaskTypes().subscribe((res)=>{
+      this.taskTypes.set(res);
+      this.isLoaded.set(false);
+    })
   }
 
   onSubmit(form:NgForm){
     const formControl=form.control;
     const plannedStartDate:Date=formControl.get('plannedStartDate')?.value;
     const plannedEndDate:Date=formControl.get('plannedEndDate')?.value;
+    const taskNameId=formControl.get('taskName')?.value;
+    const taskName=this.taskTypes().find((task)=>task.id==taskNameId);
     var notifyDate:Date;
-    if(!this.notify){
+    if(!this.notify()){
       notifyDate=new Date(plannedStartDate);
     }
     else{
@@ -66,7 +69,7 @@ export class PlannerFormComponent implements OnInit {
     const plan:Plan={
       name:formControl.get('name')?.value,
       userId:"1000",
-      taskName:formControl.get('taskType')?.value,
+      taskName:taskName!,
       location:formControl.get('location')?.value,
       task:formControl.get('task')?.value,
       createdDate:new Date(),
@@ -78,9 +81,16 @@ export class PlannerFormComponent implements OnInit {
       isCompleted:false,
     }
     console.log(plan)
-    this.plannerService.addPlan(plan).subscribe((res)=>{
-      console.log(res);
+    this.plannerService.addPlan(plan).subscribe({
+      next:(res)=>{
+        this.toastr.success("Plan Added");
+      },
+      error:(error)=>{
+        console.log(error);
+        this.toastr.error("Adding Plan Failed!");
+      }
     });
+    form.resetForm();
   }
 
   enableNotify(event:any){
