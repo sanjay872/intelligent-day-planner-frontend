@@ -20,14 +20,20 @@
     <table>
         @for (time of timeAM; track $index) {
             <tr>
-                <td class="time">{{time}} AM</td>
-                <td class="data"></td>
+                <th class="time" rowspan="2">{{time}} AM</th>
+                <td class="data">1</td>
+            </tr>
+            <tr>
+                <td class="data">2</td>
             </tr>
         }
         @for (time of timePM; track $index) {
             <tr>
-                <td class="time">{{time}} PM</td>
-                <td class="data"></td>
+                <th class="time" rowspan="2">{{time}} AM</th>
+                <td class="data">1</td>
+            </tr>
+            <tr>
+                <td class="data">2</td>
             </tr>
         }
     </table>

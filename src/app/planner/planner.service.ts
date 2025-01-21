@@ -25,4 +25,8 @@ export class PlannerService {
   getTaskTypes(){
     return this.http.get<TaskType[]>('http://localhost:8080/task');
   }
+
+  getPlansByUserIdAndDate(id:string,date:Date){
+    return this.http.get<Plan[]>("http://localhost:8080/plan/user/"+id+"/date",{params:{"date":date.toDateString()}});
+  }
 }

@@ -27,8 +27,8 @@
       <div class="planned-date-body">
         <div class="planned-date--start">
           <mat-form-field>
-            <mat-label>Start Date</mat-label>
-            <input matInput [matDatepicker]="planstartdatepicker" ngModel name="plannedStartDate" required>
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="planstartdatepicker" ngModel name="plannedDate" required>
             <mat-datepicker #planstartdatepicker/>
             <mat-datepicker-toggle [for]="planstartdatepicker" matSuffix/>
           </mat-form-field>
@@ -36,24 +36,24 @@
             <mat-label>Start time</mat-label>
             <input matInput
               [matTimepicker]="planstarttimepicker"
-              ngModel name="plannedStartDate"
+              ngModel name="plannedStartTime"
               [ngModelOptions]="{updateOn: 'blur'}" required>
             <mat-timepicker interval="15m" #planstarttimepicker/>
             <mat-timepicker-toggle [for]="planstarttimepicker" matSuffix/>
           </mat-form-field>
         </div>
         <div class="planned-date--end">
-          <mat-form-field>
+          <!-- <mat-form-field>
             <mat-label>End date</mat-label>
             <input matInput [matDatepicker]="planenddatepicker" ngModel name="plannedEndDate" required>
             <mat-datepicker #planenddatepicker/>
             <mat-datepicker-toggle [for]="planenddatepicker" matSuffix/>
-          </mat-form-field>
+          </mat-form-field> -->
           <mat-form-field>
             <mat-label>End time</mat-label>
             <input matInput
               [matTimepicker]="planendtimepicker"
-              ngModel name="plannedEndDate"
+              ngModel name="plannedEndTime"
               [ngModelOptions]="{updateOn: 'blur'}" required>
             <mat-timepicker interval="15m" #planendtimepicker/>
             <mat-timepicker-toggle [for]="planendtimepicker" matSuffix/>

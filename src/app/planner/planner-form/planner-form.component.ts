@@ -48,18 +48,23 @@ export class PlannerFormComponent implements OnInit {
   }
 
   onSubmit(form:NgForm){
+    if(!form.valid){
+      this.toastr.error("Please Fill all Fields")
+      return;
+    }
     const formControl=form.control;
-    const plannedStartDate:Date=formControl.get('plannedStartDate')?.value;
-    const plannedEndDate:Date=formControl.get('plannedEndDate')?.value;
+    const plannedDate:Date=formControl.get('plannedDate')?.value;
+    const plannedStartTime:Date=formControl.get('plannedStartTime')?.value;
+    const plannedEndTime:Date=formControl.get('plannedEndTime')?.value;
     const taskNameId=formControl.get('taskName')?.value;
     const taskName=this.taskTypes().find((task)=>task.id==taskNameId);
     var notifyDate:Date;
     if(!this.notify()){
-      notifyDate=new Date(plannedStartDate);
+      notifyDate=new Date(plannedDate);
     }
     else{
       if(this.quickTime()!=0){
-        notifyDate=new Date(plannedStartDate);
+        notifyDate=new Date(plannedDate);
         notifyDate.setMinutes(notifyDate.getMinutes()-this.quickTime());
       }
       else{
@@ -74,8 +79,9 @@ export class PlannerFormComponent implements OnInit {
       task:formControl.get('task')?.value,
       createdDate:new Date(),
       updatedDate:new Date(),
-      plannedStartDate:plannedStartDate,
-      plannedEndDate:plannedEndDate,
+      plannedDate:plannedDate,
+      plannedStartTime:plannedStartTime,
+      plannedEndTime:plannedEndTime,
       notify:this.notify(),
       notifyDate:notifyDate,
       isCompleted:false,
@@ -83,6 +89,7 @@ export class PlannerFormComponent implements OnInit {
     console.log(plan)
     this.plannerService.addPlan(plan).subscribe({
       next:(res)=>{
+        form.resetForm();
         this.toastr.success("Plan Added");
       },
       error:(error)=>{
@@ -90,7 +97,6 @@ export class PlannerFormComponent implements OnInit {
         this.toastr.error("Adding Plan Failed!");
       }
     });
-    form.resetForm();
   }
 
   enableNotify(event:any){
